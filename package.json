@@ -1,0 +1,40 @@
+{
+  "name": "e-commerce-api-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "cross-env NODE_ENV=production node ./bin/server.js",
+    "start:dev": "cross-env NODE_ENV=development nodemon ./bin/server.js",
+    "lint": "eslint **/*.js",
+    "lint:fix": "eslint --fix **/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nataliia-Korneiko/e-commerce-api-backend.git"
+  },
+  "keywords": [],
+  "author": "Nataliia Korneiko <korneyko_ns@ukr.net>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Nataliia-Korneiko/e-commerce-api-backend/issues"
+  },
+  "homepage": "https://github.com/Nataliia-Korneiko/e-commerce-api-backend#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "helmet": "^4.6.0",
+    "mongoose": "^5.13.7",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.24.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.1.0",
+    "nodemon": "^2.0.12"
+  }
+}
