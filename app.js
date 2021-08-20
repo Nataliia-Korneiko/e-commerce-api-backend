@@ -4,7 +4,11 @@ const express = require('express');
 const logger = require('morgan');
 const cors = require('cors');
 const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
 const { httpCode } = require('./helpers/constants');
+const { ErrorHandler } = require('./helpers/error-handler');
+const { apiLimit, jsonLimit } = require('./config/rate-limit.json');
+
 require('dotenv').config();
 
 const api = process.env.API_URL;
@@ -19,8 +23,25 @@ const accessLogStream = fs.createWriteStream(
 app.use(helmet());
 app.use(cors());
 app.options('*', cors());
-app.use(express.json());
+app.use(express.json({ limit: jsonLimit }));
 app.use(logger('combined', { stream: accessLogStream }, formatsLogger));
+
+app.use(
+  '/api/',
+  rateLimit({
+    windowMs: apiLimit.windowMs,
+    max: apiLimit.max,
+
+    handler: (req, res, next) => {
+      next(
+        new ErrorHandler(
+          httpCode.BAD_REQUEST,
+          'You have reached your request limit. Try later!'
+        )
+      );
+    },
+  })
+);
 
 app.use((req, res, _next) => {
   res.status(httpCode.NOT_FOUND).json({
