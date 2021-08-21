@@ -9,9 +9,6 @@ const categorySchema = new Schema(
     icon: {
       type: String,
     },
-    color: {
-      type: String,
-    },
   },
   { versionKey: false, timestamps: true }
 );
