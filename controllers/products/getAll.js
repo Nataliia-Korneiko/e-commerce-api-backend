@@ -1,11 +1,11 @@
-const { productsServices } = require('../../services');
+const { productsServices: services } = require('../../services');
 const { httpCode } = require('../../helpers/constants');
 
 const getAll = async (req, res, next) => {
   const { query } = req;
 
   try {
-    const products = await productsServices.getAll(query);
+    const products = await services.getAll(query);
 
     if (!products) {
       return res.status(httpCode.NOT_FOUND).json({

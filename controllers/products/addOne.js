@@ -1,4 +1,7 @@
-const { productsServices, categoriesServices } = require('../../services');
+const {
+  productsServices: services,
+  categoriesServices,
+} = require('../../services');
 const { httpCode } = require('../../helpers/constants');
 
 const addOne = async (req, res, next) => {
@@ -31,9 +34,10 @@ const addOne = async (req, res, next) => {
       });
     }
 
-    const product = await productsServices.addOne({
+    const product = await services.addOne({
       name,
       description,
+      color,
       brand,
       price,
       category,
@@ -47,6 +51,7 @@ const addOne = async (req, res, next) => {
       data: {
         name: product.name,
         description: product.description,
+        color: product.color,
         brand: product.brand,
         price: product.price,
         category: product.category,

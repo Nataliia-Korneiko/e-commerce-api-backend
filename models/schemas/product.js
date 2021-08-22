@@ -78,10 +78,6 @@ const productSchema = new Schema(
       type: Boolean,
       default: false,
     },
-    dateCreated: {
-      type: Date,
-      default: Date.now,
-    },
   },
   { versionKey: false, timestamps: true }
 );

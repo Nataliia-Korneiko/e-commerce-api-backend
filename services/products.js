@@ -33,8 +33,56 @@ const addOne = async (body) => {
   }
 };
 
+const deleteOne = async (id) => {
+  try {
+    return await Product.findByIdAndDelete(id);
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
+// const updateOne = async (id, body) => {
+//   try {
+//     return await Product.findByIdAndUpdate(
+//       { _id: id },
+//       { ...body },
+//       { new: true }
+//     ).populate('category');
+//   } catch (error) {
+//     throw new Error(error.message);
+//   }
+// };
+
+const updateOne = async (
+  id,
+  name,
+  description,
+  color,
+  brand,
+  price,
+  category,
+  countInStock
+) => {
+  try {
+    return await Product.findByIdAndUpdate(
+      { _id: id },
+      { name, description, color, brand, price, category, countInStock },
+      { new: true }
+    )
+      .populate({
+        path: 'category',
+        select: '-createdAt -updatedAt -__v',
+      })
+      .select('-createdAt -updatedAt');
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
 module.exports = {
   getAll,
   getOne,
   addOne,
+  deleteOne,
+  updateOne,
 };
