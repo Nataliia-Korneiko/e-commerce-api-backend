@@ -49,6 +49,7 @@ const addOne = async (req, res, next) => {
       code: httpCode.CREATED,
       message: 'Successful operation',
       data: {
+        _id: product._id,
         name: product.name,
         description: product.description,
         color: product.color,

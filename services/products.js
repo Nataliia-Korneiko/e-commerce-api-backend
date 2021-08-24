@@ -10,7 +10,12 @@ const getAll = async (query) => {
 
   try {
     // return Product.find(filter).populate('category').select('name -_id'); // select - отдаем на фронт только определенные поля, -_id - не покажет id
-    return Product.find(filter).populate('category');
+    return Product.find(filter)
+      .populate({
+        path: 'category',
+        select: '-createdAt -updatedAt -__v',
+      })
+      .select('-createdAt -updatedAt');
   } catch (error) {
     throw new Error(error.message);
   }
@@ -18,7 +23,15 @@ const getAll = async (query) => {
 
 const getOne = async (id) => {
   try {
-    return Product.findById(id).populate('category'); // populate - вместо id категории получаем развернутый объект категории
+    return (
+      Product.findById(id)
+        // populate - вместо id категории получаем развернутый объект категории
+        .populate({
+          path: 'category',
+          select: '-createdAt -updatedAt -__v',
+        })
+        .select('-createdAt -updatedAt')
+    );
   } catch (error) {
     throw new Error(error.message);
   }
@@ -26,8 +39,10 @@ const getOne = async (id) => {
 
 const addOne = async (body) => {
   try {
-    const product = new Product(body);
-    return await product.save();
+    // const product = new Product(body);
+    // return await product.save();
+
+    return await Product.create(body);
   } catch (error) {
     throw new Error(error.message);
   }
@@ -61,14 +76,84 @@ const updateOne = async (
   brand,
   price,
   category,
-  countInStock
+  countInStock,
+  isFeatured
 ) => {
   try {
     return await Product.findByIdAndUpdate(
       { _id: id },
-      { name, description, color, brand, price, category, countInStock },
+      {
+        name,
+        description,
+        color,
+        brand,
+        price,
+        category,
+        countInStock,
+        isFeatured,
+      },
       { new: true }
     )
+      .populate({
+        path: 'category',
+        select: '-createdAt -updatedAt -__v',
+      })
+      .select('-createdAt -updatedAt');
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
+const updateOneRating = async (id, rating) => {
+  try {
+    return await Product.findByIdAndUpdate(
+      { _id: id },
+      {
+        rating,
+      },
+      { new: true }
+    )
+      .populate({
+        path: 'category',
+        select: '-createdAt -updatedAt -__v',
+      })
+      .select('-createdAt -updatedAt');
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
+const updateOneResume = async (id, resume) => {
+  try {
+    return await Product.findByIdAndUpdate(
+      { _id: id },
+      {
+        resume,
+      },
+      { new: true }
+    )
+      .populate({
+        path: 'category',
+        select: '-createdAt -updatedAt -__v',
+      })
+      .select('-createdAt -updatedAt');
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
+const getAllCount = async () => {
+  try {
+    return await Product.countDocuments((count) => count); // countDocuments - количество найменований товаров в db
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
+const getAllFeatured = async (count) => {
+  try {
+    return await Product.find({ isFeatured: true })
+      .limit(+count) // количество популярных товаров, :count - лимит на показ (сколько товаров отображать)
       .populate({
         path: 'category',
         select: '-createdAt -updatedAt -__v',
@@ -85,4 +170,8 @@ module.exports = {
   addOne,
   deleteOne,
   updateOne,
+  updateOneRating,
+  updateOneResume,
+  getAllCount,
+  getAllFeatured,
 };

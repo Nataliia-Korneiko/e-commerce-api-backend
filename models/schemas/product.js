@@ -70,9 +70,9 @@ const productSchema = new Schema(
       max: 5,
       default: 0,
     },
-    totalReviews: {
-      type: Number,
-      default: 0,
+    resume: {
+      type: String,
+      maxLength: 300,
     },
     isFeatured: {
       type: Boolean,

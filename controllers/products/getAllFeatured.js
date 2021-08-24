@@ -1,11 +1,11 @@
 const { productsServices: services } = require('../../services');
 const { httpCode } = require('../../helpers/constants');
 
-const getAll = async (req, res, next) => {
-  const { query } = req;
-
+const getAllFeatured = async (req, res, next) => {
+  const { count } = req.params;
+  // const count = req.params.count ? req.params.count : 0;
   try {
-    const products = await services.getAll(query);
+    const products = await services.getAllFeatured(count);
 
     if (!products || products.length === 0) {
       return res.status(httpCode.NOT_FOUND).json({
@@ -28,4 +28,4 @@ const getAll = async (req, res, next) => {
   }
 };
 
-module.exports = getAll;
+module.exports = getAllFeatured;

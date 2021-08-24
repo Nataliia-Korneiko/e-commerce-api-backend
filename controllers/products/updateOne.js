@@ -1,10 +1,9 @@
+const mongoose = require('mongoose');
 const {
   productsServices: services,
   categoriesServices,
 } = require('../../services');
 const { httpCode } = require('../../helpers/constants');
-
-const mongoose = require('mongoose');
 
 const updateOne = async (req, res, next) => {
   const { id } = req.params;
@@ -13,8 +12,16 @@ const updateOne = async (req, res, next) => {
   //   body: { category },
   // } = req;
 
-  const { name, description, color, brand, price, category, countInStock } =
-    req.body;
+  const {
+    name,
+    description,
+    color,
+    brand,
+    price,
+    category,
+    countInStock,
+    isFeatured,
+  } = req.body;
 
   try {
     if (!mongoose.isValidObjectId(id)) {
@@ -43,7 +50,8 @@ const updateOne = async (req, res, next) => {
       brand,
       price,
       category,
-      countInStock
+      countInStock,
+      isFeatured
     );
 
     if (!product || !id) {
