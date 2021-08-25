@@ -6,6 +6,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 const { productsRoutes } = require('./routes');
+const categoriesRoutes = require('./routes/categories');
 const { httpCode } = require('./helpers/constants');
 const { ErrorHandler } = require('./helpers/error-handler');
 const { apiLimit, jsonLimit } = require('./config/rate-limit.json');
@@ -45,6 +46,7 @@ app.use(
 );
 
 app.use(`${api}/products`, productsRoutes);
+app.use(`${api}/categories`, categoriesRoutes);
 
 app.use((req, res, _next) => {
   res.status(httpCode.NOT_FOUND).json({
