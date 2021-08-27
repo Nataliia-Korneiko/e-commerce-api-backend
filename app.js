@@ -5,12 +5,16 @@ const logger = require('morgan');
 const cors = require('cors');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
-const { productsRoutes } = require('./routes');
-const categoriesRoutes = require('./routes/categories');
+const {
+  productsRoutes,
+  categoriesRoutes,
+  usersRoutes,
+  authRoutes,
+} = require('./routes');
 const { httpCode } = require('./helpers/constants');
-const { ErrorHandler } = require('./helpers/error-handler');
+const { ErrorHandler, errorHandler } = require('./helpers/error-handler');
 const { apiLimit, jsonLimit } = require('./config/rate-limit.json');
-
+const authJwt = require('./helpers/jwt');
 require('dotenv').config();
 
 const api = process.env.API_URL;
@@ -27,6 +31,8 @@ app.use(cors());
 app.options('*', cors());
 app.use(express.json({ limit: jsonLimit }));
 app.use(logger('combined', { stream: accessLogStream }, formatsLogger));
+app.use(authJwt());
+app.use(errorHandler);
 
 app.use(
   '/api/',
@@ -47,6 +53,8 @@ app.use(
 
 app.use(`${api}/products`, productsRoutes);
 app.use(`${api}/categories`, categoriesRoutes);
+app.use(`${api}/users`, usersRoutes);
+app.use(`${api}/auth`, authRoutes);
 
 app.use((req, res, _next) => {
   res.status(httpCode.NOT_FOUND).json({

@@ -1,13 +1,13 @@
-const { categoriesServices: services } = require('../../services');
+const { usersServices: services } = require('../../services');
 const { httpCode } = require('../../helpers/constants');
 
-const getOne = async (req, res, next) => {
+const deleteOne = async (req, res, next) => {
   const { id } = req.params;
 
   try {
-    const category = await services.getOne(id);
+    const user = await services.deleteOne(id);
 
-    if (!category) {
+    if (!user) {
       return res.status(httpCode.NOT_FOUND).json({
         status: 'error',
         code: httpCode.NOT_FOUND,
@@ -16,15 +16,13 @@ const getOne = async (req, res, next) => {
     }
 
     res.status(httpCode.OK).json({
-      status: 'Successful operation',
+      status: 'success',
       code: httpCode.OK,
-      data: {
-        category,
-      },
+      message: 'Successful operation',
     });
   } catch (error) {
     next(error);
   }
 };
 
-module.exports = getOne;
+module.exports = deleteOne;
