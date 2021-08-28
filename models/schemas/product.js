@@ -49,8 +49,8 @@ const productSchema = new Schema(
     },
     price: {
       type: Number,
-      default: 0,
       required: [true, 'Add product price'],
+      default: 0,
     },
     category: {
       type: SchemaTypes.ObjectId,

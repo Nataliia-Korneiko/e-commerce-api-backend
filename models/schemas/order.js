@@ -5,48 +5,50 @@ const orderSchema = new Schema(
     orderItems: [
       {
         type: SchemaTypes.ObjectId,
+        required: [true, 'Add order items'],
         ref: 'order_item',
-        required: true,
       },
     ],
-    shippingAddress1: {
-      type: String,
-      required: true,
+    totalPrice: {
+      type: Number,
+      default: 0,
     },
-    shippingAddress2: {
-      type: String,
-    },
-    city: {
-      type: String,
-      required: true,
-    },
-    zip: {
-      type: String,
-      required: true,
-    },
-    country: {
-      type: String,
-      required: true,
-    },
-    phone: {
-      type: String,
-      required: true,
+    dateOrdered: {
+      type: Date,
+      default: Date.now,
     },
     status: {
       type: String,
-      required: true,
+      required: [true, 'Add order status'],
       default: 'Pending',
-    },
-    totalPrice: {
-      type: Number,
     },
     user: {
       type: SchemaTypes.ObjectId,
       ref: 'user',
     },
-    dateOrdered: {
-      type: Date,
-      default: Date.now,
+    phone: {
+      type: String,
+      required: [true, 'Add order phone'],
+    },
+    street: {
+      type: String,
+      required: [true, 'Add order street'],
+    },
+    apartment: {
+      type: String,
+      required: [true, 'Add order apartment'],
+    },
+    city: {
+      type: String,
+      required: [true, 'Add order city'],
+    },
+    country: {
+      type: String,
+      required: [true, 'Add order country'],
+    },
+    zip: {
+      type: String,
+      required: [true, 'Add order zip'],
     },
   },
   { versionKey: false, timestamps: true }

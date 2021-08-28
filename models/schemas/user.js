@@ -4,19 +4,19 @@ const userSchema = new Schema(
   {
     name: {
       type: String,
-      required: true,
+      required: [true, 'Add user name'],
     },
     email: {
       type: String,
-      required: true,
+      required: [true, 'Add user email'],
     },
     password: {
       type: String,
-      required: true,
+      required: [true, 'Add user password'],
     },
     phone: {
       type: String,
-      required: true,
+      required: [true, 'Add user phone'],
     },
     isAdmin: {
       type: Boolean,
@@ -24,23 +24,18 @@ const userSchema = new Schema(
     },
     street: {
       type: String,
-      default: '',
     },
     apartment: {
       type: String,
-      default: '',
-    },
-    zip: {
-      type: String,
-      default: '',
     },
     city: {
       type: String,
-      default: '',
     },
     country: {
       type: String,
-      default: '',
+    },
+    zip: {
+      type: String,
     },
   },
   { versionKey: false, timestamps: true }

@@ -4,7 +4,7 @@ const categorySchema = new Schema(
   {
     name: {
       type: String,
-      required: true,
+      required: [true, 'Add category name'],
     },
     icon: {
       type: String,
