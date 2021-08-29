@@ -27,7 +27,16 @@ const productColor = {
   MULTICOLORED: 'multicolored',
 };
 
+const orderStatus = {
+  NEW: 'new',
+  PENDING: 'pending',
+  CONFIRMED: 'confirmed',
+  SHIPPING: 'shipping',
+  COMPLETED: 'completed',
+};
+
 module.exports = {
   httpCode,
   productColor,
+  orderStatus,
 };

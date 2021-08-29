@@ -10,6 +10,7 @@ const {
   categoriesRoutes,
   usersRoutes,
   authRoutes,
+  ordersRoutes,
 } = require('./routes');
 const { httpCode } = require('./helpers/constants');
 const { ErrorHandler, errorHandler } = require('./helpers/error-handler');
@@ -55,6 +56,7 @@ app.use(`${api}/products`, productsRoutes);
 app.use(`${api}/categories`, categoriesRoutes);
 app.use(`${api}/users`, usersRoutes);
 app.use(`${api}/auth`, authRoutes);
+app.use(`${api}/orders`, ordersRoutes);
 
 app.use((req, res, _next) => {
   res.status(httpCode.NOT_FOUND).json({

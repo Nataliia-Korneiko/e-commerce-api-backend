@@ -2,7 +2,7 @@ const { User } = require('../models');
 
 const getAll = async () => {
   try {
-    return User.find().select('-password -createdAt -updatedAt -__v');
+    return User.find().select('-password -createdAt -updatedAt');
   } catch (error) {
     throw new Error(error.message);
   }
@@ -41,7 +41,7 @@ const updateOne = async (
         country,
       },
       { new: true }
-    ).select('-password -createdAt -updatedAt -__v');
+    ).select('-password -createdAt -updatedAt');
   } catch (error) {
     throw new Error(error.message);
   }
@@ -49,9 +49,7 @@ const updateOne = async (
 
 const getUserById = async (id) => {
   try {
-    return await User.findById(id).select(
-      '-password -createdAt -updatedAt -__v'
-    );
+    return await User.findById(id).select('-password -createdAt -updatedAt');
   } catch (error) {
     throw new Error(error.message);
   }

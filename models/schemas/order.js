@@ -1,4 +1,5 @@
 const { Schema, SchemaTypes } = require('mongoose');
+const { orderStatus } = require('../../helpers/constants');
 
 const orderSchema = new Schema(
   {
@@ -13,17 +14,28 @@ const orderSchema = new Schema(
       type: Number,
       default: 0,
     },
-    dateOrdered: {
+    orderDate: {
       type: Date,
       default: Date.now,
     },
     status: {
       type: String,
+      enum: {
+        values: [
+          orderStatus.NEW,
+          orderStatus.PENDING,
+          orderStatus.CONFIRMED,
+          orderStatus.SHIPPING,
+          orderStatus.COMPLETED,
+        ],
+        message: "This status isn't allowed",
+      },
       required: [true, 'Add order status'],
-      default: 'Pending',
+      default: orderStatus.NEW,
     },
     user: {
       type: SchemaTypes.ObjectId,
+      required: [true, 'Add user'],
       ref: 'user',
     },
     phone: {

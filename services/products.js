@@ -13,7 +13,7 @@ const getAll = async (query) => {
     return Product.find(filter)
       .populate({
         path: 'category',
-        select: '-createdAt -updatedAt -__v',
+        select: '-createdAt -updatedAt',
       })
       .select('-createdAt -updatedAt');
   } catch (error) {
@@ -28,7 +28,7 @@ const getOne = async (id) => {
         // populate - вместо id категории получаем развернутый объект категории
         .populate({
           path: 'category',
-          select: '-createdAt -updatedAt -__v',
+          select: '-createdAt -updatedAt',
         })
         .select('-createdAt -updatedAt')
     );
@@ -96,7 +96,7 @@ const updateOne = async (
     )
       .populate({
         path: 'category',
-        select: '-createdAt -updatedAt -__v',
+        select: '-createdAt -updatedAt',
       })
       .select('-createdAt -updatedAt');
   } catch (error) {
@@ -115,7 +115,7 @@ const updateOneRating = async (id, rating) => {
     )
       .populate({
         path: 'category',
-        select: '-createdAt -updatedAt -__v',
+        select: '-createdAt -updatedAt',
       })
       .select('-createdAt -updatedAt');
   } catch (error) {
@@ -134,7 +134,7 @@ const updateOneResume = async (id, resume) => {
     )
       .populate({
         path: 'category',
-        select: '-createdAt -updatedAt -__v',
+        select: '-createdAt -updatedAt',
       })
       .select('-createdAt -updatedAt');
   } catch (error) {
@@ -156,7 +156,7 @@ const getAllFeatured = async (count) => {
       .limit(+count) // количество популярных товаров, :count - лимит на показ (сколько товаров отображать)
       .populate({
         path: 'category',
-        select: '-createdAt -updatedAt -__v',
+        select: '-createdAt -updatedAt',
       })
       .select('-createdAt -updatedAt');
   } catch (error) {

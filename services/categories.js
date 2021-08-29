@@ -2,7 +2,7 @@ const { Category } = require('../models');
 
 const getAll = async () => {
   try {
-    return Category.find().select('-createdAt -updatedAt -__v');
+    return Category.find().select('-createdAt -updatedAt');
   } catch (error) {
     throw new Error(error.message);
   }
@@ -10,7 +10,7 @@ const getAll = async () => {
 
 const getOne = async (id) => {
   try {
-    return Category.findById(id).select('-createdAt -updatedAt -__v');
+    return Category.findById(id).select('-createdAt -updatedAt');
   } catch (error) {
     throw new Error(error.message);
   }
