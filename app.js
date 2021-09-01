@@ -33,6 +33,10 @@ app.options('*', cors());
 app.use(express.json({ limit: jsonLimit }));
 app.use(logger('combined', { stream: accessLogStream }, formatsLogger));
 app.use(authJwt());
+app.use(
+  '/public/uploads',
+  express.static(path.join(__dirname, '/public/uploads'))
+);
 app.use(errorHandler);
 
 app.use(

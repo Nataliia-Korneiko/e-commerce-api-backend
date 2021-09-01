@@ -73,6 +73,7 @@ const productSchema = new Schema(
     resume: {
       type: String,
       maxLength: 300,
+      default: '',
     },
     isFeatured: {
       type: Boolean,

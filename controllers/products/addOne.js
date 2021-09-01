@@ -5,6 +5,8 @@ const {
 const { httpCode } = require('../../helpers/constants');
 
 const addOne = async (req, res, next) => {
+  const { file } = req;
+
   const {
     name,
     description,
@@ -34,6 +36,17 @@ const addOne = async (req, res, next) => {
       });
     }
 
+    if (!file) {
+      return res.status(httpCode.BAD_REQUEST).json({
+        status: 'error',
+        code: httpCode.BAD_REQUEST,
+        message: 'No image in the request',
+      });
+    }
+
+    const fileName = file.filename;
+    const basePath = `${req.protocol}://${req.get('host')}/public/uploads/`;
+
     const product = await services.addOne({
       name,
       description,
@@ -42,6 +55,7 @@ const addOne = async (req, res, next) => {
       price,
       category,
       countInStock,
+      image: `${basePath}${fileName}`,
     });
 
     res.status(httpCode.CREATED).json({
@@ -50,13 +64,14 @@ const addOne = async (req, res, next) => {
       message: 'Successful operation',
       data: {
         _id: product._id,
-        name: product.name,
-        description: product.description,
-        color: product.color,
-        brand: product.brand,
-        price: product.price,
-        category: product.category,
-        countInStock: product.countInStock,
+        name,
+        description,
+        color,
+        brand,
+        price,
+        category,
+        countInStock,
+        image: product.image,
       },
     });
   } catch (error) {

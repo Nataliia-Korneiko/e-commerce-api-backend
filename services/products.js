@@ -39,9 +39,6 @@ const getOne = async (id) => {
 
 const addOne = async (body) => {
   try {
-    // const product = new Product(body);
-    // return await product.save();
-
     return await Product.create(body);
   } catch (error) {
     throw new Error(error.message);
@@ -55,18 +52,6 @@ const deleteOne = async (id) => {
     throw new Error(error.message);
   }
 };
-
-// const updateOne = async (id, body) => {
-//   try {
-//     return await Product.findByIdAndUpdate(
-//       { _id: id },
-//       { ...body },
-//       { new: true }
-//     ).populate('category');
-//   } catch (error) {
-//     throw new Error(error.message);
-//   }
-// };
 
 const updateOne = async (
   id,
@@ -142,6 +127,33 @@ const updateOneResume = async (id, resume) => {
   }
 };
 
+const updateOneImages = async (id, files, basePath) => {
+  try {
+    const imagesPaths = [];
+
+    if (files) {
+      files.map(async (file) => {
+        await imagesPaths.push(`${basePath}${file.filename}`);
+      });
+    }
+
+    return await Product.findByIdAndUpdate(
+      { _id: id },
+      {
+        images: imagesPaths,
+      },
+      { new: true }
+    )
+      .populate({
+        path: 'category',
+        select: '-createdAt -updatedAt',
+      })
+      .select('-createdAt -updatedAt');
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
 const getAllCount = async () => {
   try {
     return await Product.countDocuments((count) => count); // countDocuments - количество найменований товаров в db
@@ -172,6 +184,7 @@ module.exports = {
   updateOne,
   updateOneRating,
   updateOneResume,
+  updateOneImages,
   getAllCount,
   getAllFeatured,
 };

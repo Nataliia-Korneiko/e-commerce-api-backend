@@ -7,5 +7,6 @@
   "accountLimit": {
     "windowMs": 3600000,
     "max": 2
-  }
+  },
+  "fileSizeLimit": 2000000
 }

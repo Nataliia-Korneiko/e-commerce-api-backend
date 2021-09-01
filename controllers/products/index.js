@@ -5,6 +5,7 @@ const deleteOne = require('./deleteOne');
 const updateOne = require('./updateOne');
 const updateOneRating = require('./updateOneRating');
 const updateOneResume = require('./updateOneResume');
+const updateOneImages = require('./updateOneImages');
 const getAllCount = require('./getAllCount');
 const getAllFeatured = require('./getAllFeatured');
 
@@ -16,6 +17,7 @@ module.exports = {
   updateOne,
   updateOneRating,
   updateOneResume,
+  updateOneImages,
   getAllCount,
   getAllFeatured,
 };
